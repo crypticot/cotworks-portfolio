@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chidubem Ojukwu: Product Management Portfolio</title>
+    <meta name="description" content="Product Management portfolio of Chidubem Ojukwu: product research, ClickUp ticketing, sprint planning, team organisation and more.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================================
+           DESIGN TOKENS: DARK MODE (default)
+        ======================================================== */
+        :root {
+            --primary: #E4F64A;
+            --bg: #1A1A1A;
+            --bg-alt: #141414;
+            --card: #242424;
+            --card-hover: #2C2C2C;
+            --border: rgba(255,255,255,0.07);
+            --text: #F0F4F8;
+            --text-muted: #8A9099;
+            --font-head: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
+            --shadow: 0 4px 24px rgba(0,0,0,0.35);
+            --noise-opacity: 0.025;
+        }
+
+        /* ========================================================
+           LIGHT MODE
+        ======================================================== */
+		body.light {
+            --primary: #879600;           /* FIXED: A darker, rich pear green that passes WCAG AA on light backgrounds */
+            --bg: #F5F5F0;                
+            --bg-alt: #EDEEE8;            
+            --card: #FFFFFF;              
+            --card-hover: #F8F8F4;        
+            --border: rgba(0,0,0,0.08);   
+            --text: #1A1A1A;              
+            --text-muted: #535A66;        /* FIXED for compliance */
+            --shadow: 0 4px 24px rgba(0,0,0,0.10);
+            --noise-opacity: 0.018;
+        }
+
+        /* ========================================================
+           GLOBAL RESET & BASE
+        ======================================================== */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            line-height: 1.65;
+            transition: background-color 0.35s ease, color 0.35s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: var(--noise-opacity);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-size: 180px 180px;
+        }
+
+        h1,h2,h3,h4 { font-family: var(--font-head); font-weight:700; line-height:1.25; }
+        a { color: inherit; text-decoration: none; transition: var(--transition); }
+        img { max-width:100%; height:auto; display:block; }
+        button { cursor:pointer; font-family: var(--font-body); }
+
+        .container { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+        section {
+            padding: 72px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        section:last-of-type { border-bottom: none; }
+
+        .section-title {
+            font-size: 1.75rem;
+            margin-bottom: 36px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content:'';
+            position:absolute;
+            left:0; bottom:-8px;
+            width:28px; height:3px;
+            background: var(--primary);
+            border-radius:2px;
+        }
+
+        /* ========================================================
+           NAV BAR
+        ======================================================== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-alt);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: background 0.35s ease;
+        }
+
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+            padding: 0 24px;
+            max-width: 1020px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+			cursor: pointer; /* Makes it feel like a real link */
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .nav-links a:hover { color: var(--primary); background: rgba(228,246,74,0.07); }
+
+        .theme-toggle {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 44px;
+            height: 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+        .theme-toggle-knob {
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 50%;
+            transition: transform 0.28s ease;
+        }
+        body.light .theme-toggle-knob { transform: translateX(20px); }
+
+        .theme-icon {
+            position: absolute;
+            font-size: 10px;
+            pointer-events: none;
+        }
+        .theme-icon.moon { left: 4px; opacity: 1; transition: opacity 0.2s; }
+        .theme-icon.sun  { right: 4px; opacity: 0.4; transition: opacity 0.2s; }
+        body.light .theme-icon.moon { opacity: 0.4; }
+        body.light .theme-icon.sun  { opacity: 1; }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        @media (max-width: 760px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 56px; left: 0; right: 0;
+                background: var(--bg-alt);
+                border-bottom: 1px solid var(--border);
+                padding: 12px 24px 16px;
+                gap: 4px;
+                z-index: 99;
+            }
+            .hamburger { display: flex; }
+        }
+
+        /* ========================================================
+           CURSOR GLOW (nice-to-have)
+        ======================================================== */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(228,246,74,0.055) 0%, transparent 70%);
+            transition: opacity 0.4s ease;
+            opacity: 0;
+			mix-blend-mode: screen; /* Keeps it glowing nicely over dark surfaces */
+        }
+        body.light .cursor-glow {
+            background: radial-gradient(circle, rgba(200,220,0,0.16) 0%, transparent 65%);
+			mix-blend-mode: multiply; /* Crucial! "Multiply" blends the light yellow into the gray paper, creating a deep, premium spotlight effect */
+        }
+
+        /* ========================================================
+           HERO
+        ======================================================== */
+        .hero {
+            padding: 80px 0 48px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-wrapper {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
+        /* Fallback avatar shown when no real photo is loaded */
+        .profile-fallback {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-fallback svg { width:64px; height:64px; fill: var(--primary); }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 14px;
+        }
+        .hero h1 span { color: var(--primary); }
+
+        .hero-tagline {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .btn-group { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+        .btn {
+            padding: 11px 26px;
+            border-radius: 30px;
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
+        }
+        .btn-primary { background: var(--primary); color: #000; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(228,246,74,0.22); }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+        /* Stats */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            gap: 16px;
+            justify-content: center;
+            margin: 40px auto 0;
+        }
+
+        .metric-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 18px 12px;
+            text-align: center;
+        }
+        .metric-num {
+            font-family: var(--font-head);
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+        .metric-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* ========================================================
+           SKILLS: TABBED (Tools / Expertise)
+        ======================================================== */
+        .tab-row {
+            display: flex;
+            gap: 0;
+            margin-bottom: 36px;
+            border-bottom: 2px solid var(--border);
+        }
+        .tab-pill {
+            background: none;
+            border: none;
+            font-family: var(--font-head);
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: var(--transition);
+        }
+        .tab-pill.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .tab-pill:hover:not(.active) { color: var(--text); }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* Skill bars */
+        .skills-list { display: flex; flex-direction: column; gap: 18px; }
+
+        .skill-row { display: flex; flex-direction: column; gap: 6px; }
+
+        .skill-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .skill-name { font-size: 0.95rem; font-weight: 500; }
+        .skill-pct  { font-size: 0.82rem; color: var(--text-muted); }
+
+        .skill-track {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .skill-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            width: 0;
+            transition: width 0.9s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        /* Expertise chips */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 14px;
+        }
+        .expertise-chip {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+        .expertise-chip:hover { border-color: rgba(228,246,74,0.35); transform: translateY(-2px); }
+        .expertise-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            flex-shrink: 0;
+        }
+
+        /* ========================================================
+           PROJECTS / CASE STUDIES: TABBED
+        ======================================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .project-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            position: relative;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(228,246,74,0.3);
+            box-shadow: var(--shadow);
+        }
+        .project-card:focus-within {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .project-thumb {
+            height: 160px;
+            background: var(--bg-alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .project-thumb svg { width:48px; height:48px; fill: var(--text-muted); opacity:0.5; }
+
+        .project-body {
+            padding: 22px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .project-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .project-title { font-size: 1.1rem; margin-bottom: 8px; }
+        .project-desc  { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 18px; line-height: 1.6; }
+        .project-link  {
+            color: var(--primary);
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .project-link:hover { gap: 9px; }
+        .project-link:focus { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 3px; }
+
+        /* ========================================================
+           AWARDS / MILESTONES
+        ======================================================== */
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .award-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            transition: var(--transition);
+        }
+        .award-card:hover { border-color: rgba(228,246,74,0.3); transform: translateY(-3px); box-shadow: var(--shadow); }
+
+        .award-icon {
+            background: rgba(228,246,74,0.1);
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .award-icon svg { width: 26px; height: 26px; fill: var(--primary); }
+        .award-details h3 { font-size: 1rem; margin-bottom: 5px; }
+        .award-details p  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* ========================================================
+           TESTIMONIALS
+        ======================================================== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .testimonial-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+        .testimonial-card:hover { border-color: rgba(228,246,74,0.25); }
+
+        .t-score {
+            display: inline-block;
+            background: rgba(228,246,74,0.12);
+            color: var(--primary);
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+        .t-text {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            font-style: italic;
+            line-height: 1.65;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .t-author h4   { font-size: 0.95rem; }
+        .t-author span { font-size: 0.82rem; color: var(--text-muted); }
+
+        /* ========================================================
+           RESOURCES
+        ======================================================== */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+        .resource-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: var(--transition);
+        }
+        .resource-card:hover { border-color: rgba(228,246,74,0.3); transform: translateY(-3px); box-shadow: var(--shadow); }
+        .resource-card:focus-within { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+        .resource-icon {
+            background: rgba(228,246,74,0.1);
+            width: 44px; height: 44px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .resource-icon svg { width: 22px; height: 22px; fill: var(--primary); }
+        .resource-title { font-size: 1rem; font-weight: 600; }
+        .resource-desc  { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; flex-grow: 1; }
+        .resource-link  {
+            color: var(--primary);
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .resource-link:hover { gap: 9px; }
+        .resource-link:focus { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 3px; }
+
+        /* ========================================================
+           FOOTER / CONTACT
+        ======================================================== */
+        .footer {
+            padding: 64px 0 32px;
+            text-align: center;
+        }
+        .footer-profile {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+        }
+        .footer-fallback {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 2px solid var(--primary);
+            background: var(--card);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .footer-fallback svg { width: 34px; height: 34px; fill: var(--primary); }
+
+        .footer h2 { font-size: 1.5rem; margin-bottom: 8px; }
+        .footer-sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 32px; }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            gap: 12px;
+        }
+        .contact-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 12px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-align: center;
+            transition: var(--transition);
+            display: block;
+        }
+        .contact-item:hover { border-color: var(--primary); color: var(--primary); }
+        .contact-item:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+        .copyright { font-size: 0.78rem; color: var(--text-muted); }
+
+        /* ========================================================
+           SCROLL REVEAL
+        ======================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .skill-fill { transition: none; }
+        }
+
+        /* ========================================================
+           RESPONSIVE
+        ======================================================== */
+        @media (max-width: 900px) {
+            .testimonials-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 720px) {
+            .projects-grid,
+            .resources-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.9rem; }
+            .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+            .contact-grid { grid-template-columns: repeat(2, 1fr); max-width: 320px; }
+            .awards-grid { grid-template-columns: 1fr; }
+            .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .metrics-grid { grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+            .metric-num { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cursor glow -->
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+    <!-- ====================================================
+         NAVBAR
+    ==================================================== -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="navbar-inner">
+            <a href="#" class="nav-logo" onclick="navigateToPage('portfolio-page')">COTworks</a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#awards">Awards</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div style="display:flex; align-items:center; gap:8px;">
+                <button
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Toggle light and dark mode"
+                    title="Toggle theme"
+                >
+                    <span class="theme-icon moon" aria-hidden="true">🌙</span>
+                    <span class="theme-icon sun"  aria-hidden="true">☀️</span>
+                    <span class="theme-toggle-knob"></span>
+                </button>
+                <button
+                    class="hamburger"
+                    id="hamburger"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="navLinks"
+                >
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+            <!-- 
+                PHOTO INSTRUCTIONS:
+                To add your photo, replace the .profile-fallback div below with:
+                <img src="YOUR_PHOTO_FILENAME.jpg" alt="Chidubem Ojukwu" class="profile-img">
+
+                If hosting on GitHub Pages, place your photo file in the same folder
+                as this HTML file and use just the filename, e.g. src="photo.jpg"
+
+                If using Google Drive: share the file publicly, get the file ID from the
+                shareable link, then use:
+                src="https://drive.google.com/uc?export=view&id=YOUR_FILE_ID"
+            -->
+
+	<div id="main-portfolio-view" class="site-page active-page">
+
+		<!-- ====================================================
+			 HERO
+		==================================================== -->
+		<header class="hero" id="home">
+			<div class="container">
+				<div class="profile-wrapper">
+					<div class="profile-fallback" role="img" aria-label="Profile photo placeholder">
+						<img src="COTworks.png" alt="Chidubem Ojukwu" class="profile-img">
+					</div>
+				</div>
+
+				<h1>Hi, I'm <span>Chidubem.</span></h1>
+				<p class="hero-tagline">From ClickUp tickets to product reviews, team coordination, and shipping a real product, Chidubem shows what it looks like to lead from inside the work.</p>
+			
+				<div class="btn-group">
+					<a href="https://drive.google.com/uc?export=download&id=174GhN9AAUR6TF5R2iW08e_sPtb5tVBvt" target="_blank" class="btn btn-primary">Resume</a>
+					<button onclick="navigateToPage('contact-page')" class="btn btn-secondary">Get in Touch</button>
+				</div>
+				
+				<!-- Metrics Grid -->
+				<div class="metrics-grid" role="list" aria-label="Key statistics">
+					<div class="metric-card" role="listitem">
+						<span class="metric-num">11</span>
+						<span class="metric-label">Jobs Completed</span>
+					</div>
+					<div class="metric-card" role="listitem">
+						<span class="metric-num">80%</span>
+						<span class="metric-label">Avg Rating</span>
+					</div>
+					<div class="metric-card" role="listitem">
+						<span class="metric-num">1</span>
+						<span class="metric-label">Product Launch</span>
+					</div>
+				</div>
+			</div>
+		</header>
+
+    <!-- ====================================================
+         SKILLS
+    ==================================================== -->
+    <section id="skills">
+        <div class="container reveal">
+            <h2 class="section-title">Skills</h2>
+
+            <div class="tab-row" role="tablist" aria-label="Skills categories">
+                <button class="tab-pill active" role="tab" aria-selected="true"  aria-controls="panel-tools"    id="tab-tools"    onclick="switchTab('tools')">Tools</button>
+                <button class="tab-pill"        role="tab" aria-selected="false" aria-controls="panel-expertise" id="tab-expertise" onclick="switchTab('expertise')">Expertise</button>
+            </div>
+
+            <!-- TOOLS -->
+            <div class="tab-panel active" id="panel-tools" role="tabpanel" aria-labelledby="tab-tools">
+                <div class="skills-list" id="skillsBars">
+                    <div class="skill-row">
+                        <div class="skill-meta"><span class="skill-name">ClickUp</span><span class="skill-pct">90%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="90"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span class="skill-name">Figma</span><span class="skill-pct">82%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="82"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span class="skill-name">Notion</span><span class="skill-pct">88%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="88"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span class="skill-name">FigJam</span><span class="skill-pct">90%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="90"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span class="skill-name">Netlify</span><span class="skill-pct">70%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="70"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span class="skill-name">GitHub</span><span class="skill-pct">70%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="70"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span class="skill-name">Google Workspace</span><span class="skill-pct">96%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="96"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span class="skill-name">Slack</span><span class="skill-pct">84%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="84"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPERTISE -->
+            <div class="tab-panel" id="panel-expertise" role="tabpanel" aria-labelledby="tab-expertise">
+                <div class="expertise-grid">
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>Product Requirement Documentation</div>
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>Ticket Structuring</div>
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>Execution Planning</div>
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>UX Auditing & Friction Analysis</div>
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>Prioritization Frameworks: RICE</div>
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>Stakeholder Management</div>
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>Cross-functional Team Coordination</div>
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>Product Roadmapping</div>
+                    <div class="expertise-chip"><span class="expertise-dot" aria-hidden="true"></span>Leadership Under Constraint</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================
+         PROJECTS / CASE STUDIES
+    ==================================================== -->
+    <section id="projects">
+        <div class="container reveal">
+            <h2 class="section-title">Work</h2>
+
+            <div class="tab-row" role="tablist" aria-label="Work categories">
+                <button class="tab-pill active" role="tab" aria-selected="true"  aria-controls="panel-projects"    id="tab-projects"    onclick="switchTab('projects')">Projects</button>
+                <button class="tab-pill"        role="tab" aria-selected="false" aria-controls="panel-casestudies" id="tab-casestudies" onclick="switchTab('casestudies')">Case Studies</button>
+            </div>
+
+            <!-- PROJECTS -->
+            <div class="tab-panel active" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects">
+                <div class="projects-grid">
+
+                    <article class="project-card">
+                        <div class="project-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                        </div>
+                        <div class="project-body">
+                            <div>
+                                <p class="project-tag">Product Leadership</p>
+                                <h3 class="project-title">Flare Tag : Digital Badge Builder</h3>
+                                <p class="project-desc">Served as the de facto team lead for FlareTag (formerly Social Badge), a digital badge builder for event organisers. Coordinated across design, frontend, backend, DevOps, QA, and sales tracks, led all check-in presentations, built documentation templates the entire team used, and maintained top-ranked ClickUp tickets throughout.</p>
+                            </div>
+                            <a href="https://flaretag.hng14.com" target="_blank" class="project-link" aria-label="Visit the Flare Tag Website">View Project</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 16.1 6.1 17 7 17h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63H19c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 23.45 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                        </div>
+                        <div class="project-body">
+                            <div>
+                                <p class="project-tag">Product Concept</p>
+                                <h3 class="project-title">ShelfSense: MR Grocery Shopping Assistant</h3>
+                                <p class="project-desc">Conceptualised a Mixed Reality product addressing a real-world user pain point, drafted the full requirement set, and built a visual pitch deck walking through the VR integration. Praised by mentors for practical use cases, well-covered edge cases, and strong slide storyboarding.</p>
+                            </div>
+                            <a href="https://docs.google.com/presentation/d/1A0mdN1QuzZPrMEGmeKqftWPZvNbI_C3MQksX5nTrajg" target="_blank" class="project-link" aria-label="View SelfSense Pitch Deck">View Project</a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- CASE STUDIES -->
+            <div class="tab-panel" id="panel-casestudies" role="tabpanel" aria-labelledby="tab-casestudies">
+                <div class="projects-grid">
+
+                    <article class="project-card">
+                        <div class="project-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                        </div>
+                        <div class="project-body">
+                            <div>
+                                <p class="project-tag">Market Research & UserFlow</p>
+                                <h3 class="project-title">Digid: Feature Variation</h3>
+                                <p class="project-desc">Researched the top digital products in the Netherlands. Identified a feature gap and proposed a unique variation for the DigiD app. Mapped the full user flow for the new feature and built a prototype to visually represent how it functions.</p>
+                            </div>
+                            <a href="https://docs.google.com/presentation/d/1EAQ-sHBF573BhWBEviffL58IHXhKgiJFutNFIn80_Ic" target="_blank" class="project-link" aria-label="View Boring Product Campaign Case Study">View Case Study</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        </div>
+                        <div class="project-body">
+                            <div>
+                                <p class="project-tag">Technical Requirements</p>
+                                <h3 class="project-title">FlareTag: Technical Requirements Document</h3>
+                                <p class="project-desc">Developed the TRD for FlareTag, detailing the authentication system, database schema, API integrations, and backend logic needed for the build. Included a dedicated design handoff section covering UI/UX assets, wireframing requirements, and how design intersected with the technical constraints.</p>
+                            </div>
+                            <a href="https://docs.google.com/document/d/16LN14zTCWlpv9YDCce7P6Y_fjFCLimw1MKKIwdXaIiI" target="_blank" class="project-link" aria-label="View MenuCard Marketing Strategy Case Study">View Case Study</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                        </div>
+                        <div class="project-body">
+                            <div>
+                                <p class="project-tag">Product Review</p>
+                                <h3 class="project-title">SkillBridge/Credlane Product Review</h3>
+                                <p class="project-desc">Reviewed SkillBridge as an external lead PM, assessing product direction, execution structure, prioritisation, and delivery readiness. Delivered an approval decision with supporting audit across five dimensions.</p>
+                            </div>
+                            <a href="https://docs.google.com/presentation/d/1IvlzNt-IPzmN5BJxdcRhv9LNB8WE0gxQc2QOGc2eUDU" target="_blank" class="project-link" aria-label="View Crisis PR Case Study">View Case Study</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                        </div>
+                        <div class="project-body">
+                            <div>
+                                <p class="project-tag">Sprint Prioritisation</p>
+                                <h3 class="project-title">VendSync: Q3 Roadmap Crisis</h3>
+                                <p class="project-desc">Inherited a chaotic product backlog with 15 engineering sprint points and five competing features. Applied a prioritisation framework to score and cut the backlog, then wrote a stakeholder pushback memo defending the decision with data.</p>
+                            </div>
+                            <a href="https://docs.google.com/document/d/1vjEJ8OHzeuC9QXHTfPuTHN37KFxiYUYvdIQPkeZtSms" target="_blank" class="project-link" aria-label="View Enterprise B2B Growth Architecture Case Study">View Case Study</a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================
+         AWARDS
+    ==================================================== -->
+    <section id="awards">
+        <div class="container reveal">
+            <h2 class="section-title">Awards & Recognition</h2>
+            <div class="awards-grid">
+
+                <div class="award-card">
+                    <div class="award-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.99 5.99 0 0 0 11 15.91V19H9v2h6v-2h-2v-3.09c1.73-.37 3.22-1.4 3.96-2.97 2.47-.31 4.39-2.4 4.39-4.94V7c0-1.1-.9-2-2-2zM5 7h2v3H5V7zm14 3h-2V7h2v3z"/></svg>
+                    </div>
+                    <div class="award-details">
+                        <h3>Best Asst. Team Lead</h3>
+                        <p>Voted as the best assistant team lead and most hardworking intern by fellow HNG i14 Cohort interns across all tracks.</p>
+                    </div>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.99 5.99 0 0 0 11 15.91V19H9v2h6v-2h-2v-3.09c1.73-.37 3.22-1.4 3.96-2.97 2.47-.31 4.39-2.4 4.39-4.94V7c0-1.1-.9-2-2-2zM5 7h2v3H5V7zm14 3h-2V7h2v3z"/></svg>
+                    </div>
+                    <div class="award-details">
+                        <h3>Top Ranking Product</h3>
+                        <p>Led Team FlareTag to top the HNG product leaderboard for three weeks running across check-in presentations and milestone evaluations.</p>
+                    </div>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.99 5.99 0 0 0 11 15.91V19H9v2h6v-2h-2v-3.09c1.73-.37 3.22-1.4 3.96-2.97 2.47-.31 4.39-2.4 4.39-4.94V7c0-1.1-.9-2-2-2zM5 7h2v3H5V7zm14 3h-2V7h2v3z"/></svg>
+                    </div>
+                    <div class="award-details">
+                        <h3>Best-Reviewed Documentation</h3>
+                        <p>FlareTag's ClickUp tickets, PRDs, and weekly goal systems were rated the top documentation in the cohort.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================
+         TESTIMONIALS
+    ==================================================== -->
+    <section id="testimonials">
+        <div class="container reveal">
+            <h2 class="section-title">Testimonials</h2>
+            <div class="testimonials-grid">
+
+                <div class="testimonial-card">
+                    <div>
+                        <span class="t-score">Peer Review</span>
+                        <p class="t-text">"Chidubem is an exceptional talent, a natural leader, and a genuinely great person to work alongside. His track record as a 3x HNG finalist speaks volumes about his work ethic and relentless grit. He brings technical excellence and competence to projects he touches. Any team would be incredibly lucky to have him."</p>
+                    </div>
+                    <div class="t-author">
+                        <h4>Channels Oladapo</h4>
+                        <span>Open Profile Product Manager · HNG i14</span>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <span class="t-score">Mentor Evaluations</span>
+                        <p class="t-text">"Good work. This is a real-world user pain point, highly realistic with a practical use case and all edge cases well covered. You also did well with your slides storyboarding walking through all the VR integration."</p>
+                    </div>
+                    <div class="t-author">
+                        <h4>Mentors' Feedback</h4>
+                        <span>Product Management Mentors · HNG i14</span>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <span class="t-score">Peer Review</span>
+                        <p class="t-text">"Your dedication, leadership, consistency, and willingness to support others have always stood out, and it's great to see those efforts recognized. You've inspired more people than you probably realize."</p>
+					</div>
+                    <div class="t-author">
+                        <h4>Edith Umunnakwe</h4>
+                        <span>PM & Virtual Assistant · Flare Tag</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================
+         RESOURCES
+    ==================================================== -->
+    <section id="resources">
+        <div class="container reveal">
+            <h2 class="section-title">Resources</h2>
+            <div class="resources-grid">
+
+                <div class="resource-card">
+                    <div class="resource-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    </div>
+                    <h3 class="resource-title">PRD Template</h3>
+                    <p class="resource-desc">The Product Requirements Document template used for FlareTag, structured for early-stage products with clear sections for problem definition, user stories, acceptance criteria, and feature scope.</p>
+                    <a href="https://docs.google.com/document/d/119byVcihzB4nOXa3xQQXXdNehkybEsZ6neXoexRcXyY/export?format=pdf" target="_blank" class="resource-link" aria-label="Download 7-Email Automation Sequence Template">Download Template</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    </div>
+                    <h3 class="resource-title">ClickUp Ticket Structure Guide</h3>
+                    <p class="resource-desc">The ticket framework used by the FlareTag team, covering title conventions, description format, user stories, acceptance criteria, dependencies, and edge cases.</p>
+                    <a href="https://docs.google.com/spreadsheets/d/1Lfq72l7jwDEOXb9rOaUeSNun47sGTbonybcY1NA0HnE/export?format=pdf" target="_blank" class="resource-link" aria-label="Download Flare Tag Ticket System">Download Ticket System</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-1 14H5c-.55 0-1-.45-1-1V7h16v10c0 .55-.45 1-1 1zM7 10h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+                    </div>
+                    <h3 class="resource-title">RICE Prioritisation Calculator</h3>
+                    <p class="resource-desc">The prioritisation matrix built for the VendSync Q3 Roadmap task, scoring five backlog items against reach, impact, confidence, and effort. Includes manual adjustments for qualitative context and a stakeholder pushback memo template.</p>
+                    <a href="https://vendsync-sprint-simulator.netlify.app/" target="_blank" class="resource-link" aria-label="Download the VendSync Q3 Roadmap Matrix">View Matrix</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    </div>
+                    <h3 class="resource-title">Product Review Slide Framework</h3>
+                    <p class="resource-desc">The slide structure used for the SkillBridge/Credlane product review. Covers product overview, approval decision, product audit, prioritisation review, and leadership assessment in a five-minute presentation format.</p>
+                    <a href="https://drive.google.com/uc?export=download&id=1u3X77sCadK-gbnE0IsUF25TdF4wmtBjb" target="_blank" class="resource-link" aria-label="Download Slides">Download Slide</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================
+         FOOTER / CONTACT
+    ==================================================== -->
+    <footer class="footer" id="contact">
+        <div class="container">
+
+            <div class="footer-fallback" role="img" aria-label="Chidubem Ojukwu">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </div>
+
+            <h2>Let's work together.</h2>
+            <p class="footer-sub">Open to freelance projects, collaborations, and full-time opportunities.</p>
+
+            <nav class="contact-grid" aria-label="Contact links">
+                <a href="mailto:cotworks@gmail.com"         class="contact-item" aria-label="Send an email">Email</a>
+                <a href="tel:+2348168824702"                   class="contact-item" aria-label="Call by phone">Phone</a>
+                <a href="https://linkedin.com/in/ojukwuii"     class="contact-item" aria-label="Connect on LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://thecoticle.wordpress.com"     class="contact-item" aria-label="Visit the Blog" target="_blank" rel="noopener">Blog</a>
+            </nav>
+
+            <p class="copyright">&copy; 2026 COTworks. All rights reserved.</p>
+        </div>
+    </footer>
+	</div>
+
+	<!-- ========================================================
+		 PAGE 2: SEPARATE CONTACT PAGE VIEW (Moved to bottom)
+	======================================================== -->
+	<div id="contact-page-view" style="display: none; min-height: 100vh; background: var(--bg); padding-top: 40px;">
+		<section class="container" style="padding: 40px 24px; max-width: 800px; margin: 0 auto;">
+			<button onclick="navigateToPage('portfolio-page')" style="background: transparent; border: none; color: var(--primary); font-family: var(--font-head); font-weight: 700; cursor: pointer; margin-bottom: 32px; display: inline-flex; align-items: center; gap: 8px; font-size: 1rem;">
+				Back to Portfolio
+			</button>
+			
+			<div style="background: var(--card); border: 1px solid var(--border); padding: 40px; border-radius: 16px; box-shadow: var(--shadow);">
+				
+				<!-- Main Form Content -->
+				<div id="form-container">
+					<h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 16px; color: var(--text);">Let's work together</h2>
+					<p style="color: var(--text-muted); max-width: 600px; margin-bottom: 40px; font-size: 1rem;">Have a project in mind, need operational systems built, or want to scale your marketing automation? Drop a message below.</p>
+					
+					<form id="portfolio-contact-form" action="https://formspree.io/f/xaqzbejl" method="POST" style="display: flex; flex-direction: column; gap: 24px;">
+						<input type="hidden" name="_subject" value="New Portfolio Contact Message!">
+
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							<label style="font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; color: var(--text);">Your Name</label>
+							<input type="text" name="name" placeholder="Chidubem Ojukwu" required style="width: 100%; padding: 16px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font-body); outline: none;">
+						</div>
+						
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							<label style="font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; color: var(--text);">Email Address</label>
+							<input type="email" name="email" placeholder="chidubem@gmail.com" required style="width: 100%; padding: 16px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font-body); outline: none;">
+						</div>
+						
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							<label style="font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; color: var(--text);">Message</label>
+							<textarea name="message" rows="6" placeholder="What do you have in mind?" required style="width: 100%; padding: 16px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font-body); outline: none; resize: vertical;"></textarea>
+						</div>
+						
+						<button type="submit" id="submit-btn" class="btn btn-primary" style="width: fit-content; margin-top: 8px; padding: 14px 32px; border-radius: 30px; font-weight: 700; cursor: pointer;">Send Message</button>
+					</form>
+				</div>
+
+				<!-- Inline Success Confirmation (Hidden by Default) -->
+				<div id="success-container" style="display: none; text-align: center; padding: 40px 0;">
+    
+					<div style="margin-bottom: 24px; display: flex; justify-content: center; align-items: center;">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--primary)" style="width: 64px; height: 64px;">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+						</svg>
+					</div>
+
+					<h2 style="font-size: 2rem; margin-bottom: 12px; color: var(--text); font-family: var(--font-head);">Message Received!</h2>
+					<p style="color: var(--text-muted); max-width: 450px; margin: 0 auto 32px auto; font-size: 1rem; line-height: 1.6;">Thanks for reaching out. Your message has bypassed the noise and landed straight in my inbox. I'll get back to you shortly.</p>
+					<button onclick="navigateToPage('portfolio-page')" class="btn btn-primary" style="padding: 12px 28px; border-radius: 30px; font-weight: 700; cursor: pointer;">Return to Home</button>
+				</div>
+
+			</div>
+		</section>
+	</div>
+
+    <!-- ====================================================
+         JAVASCRIPT
+    ==================================================== -->
+    <script>
+    (function() {
+
+        /* ---------- THEME TOGGLE ---------- */
+        const body        = document.body;
+        const toggle      = document.getElementById('themeToggle');
+        const savedTheme  = localStorage.getItem('theme');
+
+        if (savedTheme === 'light') body.classList.add('light');
+
+        toggle.addEventListener('click', function() {
+            body.classList.toggle('light');
+            localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+        });
+
+
+        /* ---------- HAMBURGER NAV ---------- */
+        const hamburger = document.getElementById('hamburger');
+        const navLinks  = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', function() {
+            const isOpen = navLinks.classList.toggle('open');
+            hamburger.setAttribute('aria-expanded', isOpen);
+        });
+
+        navLinks.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+
+        /* ---------- CURSOR GLOW ---------- */
+        const glow = document.getElementById('cursorGlow');
+        let glowVisible = false;
+
+        document.addEventListener('mousemove', function(e) {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top  = e.clientY + 'px';
+            if (!glowVisible) {
+                glow.style.opacity = '1';
+                glowVisible = true;
+            }
+        });
+
+        document.addEventListener('mouseleave', function() {
+            glow.style.opacity = '0';
+            glowVisible = false;
+        });
+
+
+        /* ---------- SCROLL REVEAL ---------- */
+        const reveals = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        reveals.forEach(function(el) { revealObserver.observe(el); });
+
+
+        /* ---------- SKILL BAR ANIMATION ---------- */
+        const skillBars     = document.querySelectorAll('.skill-fill');
+        let barsAnimated    = false;
+
+        const barObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting && !barsAnimated) {
+                    barsAnimated = true;
+                    skillBars.forEach(function(bar) {
+                        bar.style.width = bar.getAttribute('data-width') + '%';
+                    });
+                    barObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const skillSection = document.getElementById('skills');
+        if (skillSection) barObserver.observe(skillSection);
+
+
+        /* ---------- UNIFIED TAB SWITCHER ---------- */
+        window.switchTab = function(tabId) {
+            // Find which tab-row the clicked button belongs to
+            const clickedBtn = event.currentTarget || event.target;
+
+            // Find sibling buttons in the same tab-row
+            const tabRow = clickedBtn.closest('.tab-row');
+            if (!tabRow) return;
+
+            const siblingBtns   = tabRow.querySelectorAll('.tab-pill');
+            const parentSection = tabRow.closest('section') || tabRow.parentElement;
+
+            // Deactivate all sibling tabs
+            siblingBtns.forEach(function(btn) {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+
+            // Activate clicked tab
+            clickedBtn.classList.add('active');
+            clickedBtn.setAttribute('aria-selected', 'true');
+
+            // Find panels that belong to this section and deactivate them
+            const panels = parentSection.querySelectorAll('.tab-panel');
+            panels.forEach(function(panel) {
+                panel.classList.remove('active');
+            });
+
+            // Activate the target panel
+            const targetPanel = document.getElementById('panel-' + tabId);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+
+                // Re-run bar animation if switching to tools tab
+                if (tabId === 'tools') {
+                    barsAnimated = false;
+                    setTimeout(function() {
+                        skillBars.forEach(function(bar) {
+                            bar.style.width = bar.getAttribute('data-width') + '%';
+                        });
+                    }, 50);
+                }
+            }
+        };
+
+    })();
+    </script>
+
+<script>
+function navigateToPage(targetPage) {
+    const portfolioView = document.getElementById('main-portfolio-view');
+    const contactView = document.getElementById('contact-page-view');
+    
+    if (targetPage === 'contact-page') {
+        portfolioView.style.display = 'none';
+        contactView.style.display = 'block';
+        document.getElementById('form-container').style.display = 'block';
+        document.getElementById('success-container').style.display = 'none';
+        window.scrollTo(0, 0);
+    } else if (targetPage === 'portfolio-page') {
+        contactView.style.display = 'none';
+        portfolioView.style.display = 'block';
+    }
+}
+
+// AUTOMATIC NAV LINKS LISTENER
+// This finds any link on your site pointing to a section anchor (starting with #)
+// and forces the portfolio view to activate instantly when clicked.
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function() {
+        navigateToPage('portfolio-page');
+    });
+});
+    // AJAX Formspree Handling for Custom Success Message
+    document.getElementById('portfolio-contact-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Stop standard redirect page navigation
+        
+        const form = event.target;
+        const button = document.getElementById('submit-btn');
+        const data = new FormData(form);
+        
+        button.textContent = "Sending...";
+        button.disabled = true;
+
+        fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            if (response.ok) {
+                // Smoothly swap to success view
+                document.getElementById('form-container').style.display = 'none';
+                document.getElementById('success-container').style.display = 'block';
+                form.reset();
+            } else {
+                alert("Ops! There was a problem submitting your form. Please try again.");
+            }
+        }).catch(error => {
+            alert("Connection error. Please try again later.");
+        }).finally(() => {
+            button.textContent = "Send Message";
+            button.disabled = false;
+        });
+    });
+</script>
+
+</body>
+</html>
